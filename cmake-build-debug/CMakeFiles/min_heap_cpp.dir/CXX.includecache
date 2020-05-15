@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/datenstruktur.cpp
+datenstruktur.hpp
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/datenstruktur.hpp
+exception.hpp
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/exception.hpp
+iostream
+-
+cmath
+-
+
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/datenstruktur.hpp
+string
+-
+
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/exception.hpp
+string
+-
+
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/main.cpp
+iostream
+-
+datenstruktur.hpp
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/datenstruktur.hpp
+exception.hpp
+C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/exception.hpp
+
