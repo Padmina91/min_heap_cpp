@@ -1,6 +1,5 @@
 #include <iostream>
 #include "datenstruktur.hpp"
-#include "exception.hpp"
 using namespace std;
 
 int main() {
