@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <sstream>
 
 template<typename T>
 class Heap {
@@ -33,7 +34,7 @@ public:
     void insert(int val);
     T minimum();
     void extract_min();
-    /*std::string to_string();*/
+    std::string to_string();
 };
 
 // ---------- private Methoden ----------
@@ -183,7 +184,34 @@ T Heap<T>::minimum() {
 
 template <typename T>
 void Heap<T>::extract_min() {
+    if (!is_empty()) {
+        _values[0] = _values[_next-1];
+        _next--;
+        if (!is_empty()) {
+            assert_min_heap_top_down(0);
+        }
+        if ((_next+1) *2 == _size +1) {
+            decrease_capacity();
+        }
+    } else {
+        //TODO: Throw Exception
+    }
+}
 
+template <typename T>
+std::string Heap<T>::to_string() {
+    using namespace std;
+    ostringstream heap_string (std::ostringstream::ate);
+    if (!is_empty()) {
+        heap_string << _values[0];
+        if (_next > 1) {
+            for (int i = 1; i < _next; i++) {
+                heap_string << ", ";
+                heap_string << _values[i];
+            }
+        }
+    }
+    return heap_string.str();
 }
 
 
