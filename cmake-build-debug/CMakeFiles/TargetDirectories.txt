@@ -1,3 +1,0 @@
-C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/cmake-build-debug/CMakeFiles/min_heap_cpp.dir
-C:/Users/Schne/CLionProjects/Semester2/min_heap_cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir

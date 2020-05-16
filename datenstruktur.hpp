@@ -214,7 +214,7 @@ std::string Heap<T>::to_string() {
     return heap_string.str();
 }
 
-
-
+// was ist .gitignore???
+// using statt typedef!
 
 #endif //MIN_HEAP_CPP_DATENSTRUKTUR_HPP
