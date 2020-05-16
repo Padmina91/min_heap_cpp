@@ -1,6 +1,9 @@
 #ifndef MIN_HEAP_CPP_DATENSTRUKTUR_HPP
 #define MIN_HEAP_CPP_DATENSTRUKTUR_HPP
 
+#include "exception.hpp"
+#include <iostream>
+#include <cmath>
 #include <string>
 
 template<typename T>
@@ -15,6 +18,8 @@ private:
     void increase_capacity();
     void decrease_capacity();
     void assert_min_heap_bottom_up(int start_index);
+    void assert_min_heap_top_down(int start_index);
+    bool is_empty();
 
 // ----------- private static Methoden ----------
     static int index_of_parent(int child_index);
@@ -26,16 +31,10 @@ public:
     explicit Heap(int size);
     ~Heap();
     void insert(int val);
-    /*T minimum();
+    T minimum();
     void extract_min();
-    std::string to_string();*/
+    /*std::string to_string();*/
 };
-
-
-#include "exception.hpp"
-#include <iostream>
-#include <cmath>
-using namespace std;
 
 // ---------- private Methoden ----------
 
@@ -73,37 +72,60 @@ void Heap<T>::decrease_capacity() {
 
 template <typename T>
 void Heap<T>::assert_min_heap_bottom_up(int start_index) {
-    int parent_index;
-    bool parent_exists = true;
-    try {
-        parent_index = index_of_parent(start_index);
-    } catch (char* e) {
-        parent_exists = false;
-        cout << e << endl;
-    }
-    cout << "Ich stehe nach dem catch Block." << endl;
-
-    /*int left_child_index = index_of_left_child(start_index);
+    int left_child_index = index_of_left_child(start_index);
+    bool left_child_exists = _next > left_child_index;
     int right_child_index = index_of_right_child(start_index);
-    bool parent_exists;
+    bool right_child_exists = _next > right_child_index;
+    int parent_index = index_of_parent(start_index);
+    bool parent_exists = true;
     if (parent_index == -1) {
         parent_exists = false;
-    } else {
-        parent_exists = true;
     }
-    bool left_child_exists = h->next > left_child_index;
-    bool right_child_exists = h->next > right_child_index;
     if (left_child_exists) {
-        assert_min_heap_bottom_up(h, left_child_index);
+        assert_min_heap_bottom_up(left_child_index);
     }
     if (right_child_exists) {
-        assert_min_heap_bottom_up(h, right_child_index);
+        assert_min_heap_bottom_up(right_child_index);
     }
-    if (parent_exists && h->values[start_index] < h->values[parent_index]) {
-        int temp = h->values[start_index];
-        h->values[start_index] = h->values[parent_index];
-        h->values[parent_index] = temp;
-    }*/
+    if (parent_exists && _values[start_index] < _values[parent_index]) {
+        int temp = _values[start_index];
+        _values[start_index] = _values[parent_index];
+        _values[parent_index] = temp;
+    }
+}
+
+template <typename T>
+void Heap<T>::assert_min_heap_top_down(int start_index) {
+    int left_child_index = index_of_left_child(start_index);
+    int right_child_index = index_of_right_child(start_index);
+    bool left_child_exists = _next > left_child_index;
+    bool right_child_exists = _next > right_child_index;
+    if (left_child_exists && right_child_exists) {
+        if (_values[left_child_index] < _values[right_child_index]) {
+            if (_values[left_child_index] < _values[start_index]) {
+                int temp = _values[start_index];
+                _values[start_index] = _values[left_child_index];
+                _values[left_child_index] = temp;
+                assert_min_heap_top_down(left_child_index);
+            }
+        } else {
+            if (_values[right_child_index] < _values[start_index]) {
+                int temp = _values[start_index];
+                _values[start_index] = _values[right_child_index];
+                _values[right_child_index] = temp;
+                assert_min_heap_top_down(right_child_index);
+            }
+        }
+    } else if (left_child_exists && _values[left_child_index] < _values[start_index]) {
+        int temp = _values[start_index];
+        _values[start_index] = _values[left_child_index];
+        _values[left_child_index] = temp;
+    }
+}
+
+template <typename T>
+bool Heap<T>::is_empty() {
+    return _next <= 0;
 }
 
 // ---------- private static Methoden ----------
@@ -112,9 +134,8 @@ template <typename T>
 int Heap<T>::index_of_parent(int child_index) {
     if (child_index != 0) {
         return (child_index - 1) / 2;
-    } else {
-        throw Exception("no parent exception!!");
-    }
+    } // wie ist hier das Ideal? "else" oder nicht?
+    return -1;
 }
 
 template <typename T>
@@ -149,6 +170,20 @@ void Heap<T>::insert(int val) {
     _values[_next] = val;
     _next++;
     assert_min_heap_bottom_up(0);
+}
+
+template <typename T>
+T Heap<T>::minimum() {
+    if (is_empty()) {
+        //TODO: throw Exception
+    } else {
+        return _values[0]; // da es sich um einen Min-Heap handelt, steht das kleinste Element immer an erster Stelle
+    }
+}
+
+template <typename T>
+void Heap<T>::extract_min() {
+
 }
 
 
