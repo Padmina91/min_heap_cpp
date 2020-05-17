@@ -3,4 +3,4 @@ project(min_heap_cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(min_heap_cpp main.cpp datenstruktur.hpp testtreiber.hpp exception.cpp exception.hpp)
+add_executable(min_heap_cpp main.cpp datenstruktur.hpp testtreiber.hpp exception.hpp)

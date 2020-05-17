@@ -7,8 +7,6 @@
 #include <string>
 #include <sstream>
 
-//TODO: Setter für (_next?) setzen
-
 template <typename T>
 class Heap {
 private:

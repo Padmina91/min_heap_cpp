@@ -4,12 +4,8 @@
 #include <string>
 
 class EmptyHeapException : public std::exception {
-private:
-    std::string _error_code;
-
 public:
-    explicit EmptyHeapException();
-    std::string to_string();
+    explicit EmptyHeapException() = default;
 };
 
 #endif //MIN_HEAP_CPP_EXCEPTION_HPP
