@@ -8,19 +8,19 @@ class Testtreiber {
 private:
 // ---------- private Methoden Deklaration ----------
     template <typename T>
-    bool test_min_heap_correctness(Heap<T>& heap_variable, int start_index, int heap_size);
+    bool test_min_heap_correctness(Heap<T> &heap_variable, int start_index, int heap_size);
     template <typename T>
-    void test1(Heap<T>& heap_variable, const std::string &type_name);
+    void test1(Heap<T> &heap_variable, const std::string &type_name);
     template <typename T>
-    void test2(Heap<T>& heap_variable, const std::string &type_name);
+    void test2(Heap<T> &heap_variable, const std::string &type_name);
     template <typename T>
-    void test3(Heap<T>& heap_variable, const std::string &type_name);
+    void test3(Heap<T> &heap_variable, const std::string &type_name);
     template <typename T>
-    void test4(Heap<T>& heap_variable, const std::string &type_name);
+    void test4(Heap<T> &heap_variable, const std::string &type_name);
     template <typename T>
-    void test5(Heap<T>& heap_variable, const std::string &type_name);
+    void test5(Heap<T> &heap_variable, const std::string &type_name);
     template <typename T>
-    void execute_all_tests(Heap<T>& heap_variable, const std::string &type_name);
+    void execute_all_tests(Heap<T> &heap_variable, const std::string &type_name);
 
 public:
 // ---------- public Methoden Definition ----------
@@ -34,7 +34,7 @@ public:
 // ---------- private Methoden Implementierung ----------
 
 template <typename T>
-bool Testtreiber::test_min_heap_correctness(Heap<T>& heap_variable, int start_index, int heap_size) {
+bool Testtreiber::test_min_heap_correctness(Heap<T> &heap_variable, int start_index, int heap_size) {
     bool heap_correct = true;
     int left_child_index = Heap<T>::index_of_left_child(start_index);
     bool left_child_exists = heap_size > left_child_index;
@@ -135,7 +135,7 @@ void Testtreiber::test5(Heap<T> &heap_variable, const std::string &type_name) {
 }
 
 template <typename T>
-void Testtreiber::execute_all_tests(Heap<T>& heap_variable, const std::string &type_name) {
+void Testtreiber::execute_all_tests(Heap<T> &heap_variable, const std::string &type_name) {
     test1(heap_variable, type_name);
     test2(heap_variable, type_name);
     test3(heap_variable, type_name);

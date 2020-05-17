@@ -42,6 +42,10 @@ public:
 
 // ---------- private Methoden Implementierung ----------
 
+/**
+ * Blääääh
+ * @tparam T
+ */
 template <typename T>
 void Heap<T>::increase_capacity() {
     int i = 0;
@@ -74,6 +78,11 @@ void Heap<T>::decrease_capacity() {
     }
 }
 
+/**
+ * Testtext
+ * @tparam T
+ * @param start_index
+ */
 template <typename T>
 void Heap<T>::assert_min_heap_bottom_up(int start_index) {
     int left_child_index = index_of_left_child(start_index);
