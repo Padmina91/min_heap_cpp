@@ -3,12 +3,12 @@
 
 #include <string>
 
-class Exception {
+class EmptyHeapException {
 private:
     std::string _error_code;
 
 public:
-    explicit Exception(std::string error_code);
+    explicit EmptyHeapException();
     std::string to_string();
 };
 

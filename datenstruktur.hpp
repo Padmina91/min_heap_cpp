@@ -35,7 +35,7 @@ private:
 
 public:
 // ---------- public Methoden ----------
-    explicit Heap(int size);
+    explicit Heap();
     
     ~Heap();
     
@@ -163,7 +163,7 @@ int Heap<T>::index_of_right_child(int parent_index) {
 // ---------- public Methoden ----------
 
 template <typename T>
-Heap<T>::Heap(int size) {
+Heap<T>::Heap() {
     _size = 1;
     _next = 0;
     _values = new T[_size];
@@ -187,7 +187,7 @@ void Heap<T>::insert(int val) {
 template <typename T>
 T Heap<T>::minimum() {
     if (is_empty()) {
-        //TODO: throw Exception
+        throw EmptyHeapException();
     } else {
         return _values[0]; // da es sich um einen Min-Heap handelt, steht das kleinste Element immer an erster Stelle
     }
@@ -205,7 +205,7 @@ void Heap<T>::extract_min() {
             decrease_capacity();
         }
     } else {
-        //TODO: Throw Exception
+        throw EmptyHeapException();
     }
 }
 

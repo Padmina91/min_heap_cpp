@@ -1,10 +1,9 @@
 #include "exception.hpp"
-using namespace std;
 
-Exception::Exception(std::string error_code) {
-    _error_code = error_code;
+EmptyHeapException::EmptyHeapException() {
+    _error_code = "Error! Heap is empty!";
 }
 
-std::string Exception::to_string() {
+std::string EmptyHeapException::to_string() {
     return _error_code;
 }
