@@ -7,9 +7,6 @@
 #include <string>
 #include <sstream>
 
-//TODO: Konstruktor überladen.
-//TODO: Doku ergänzen und optimieren.
-
 template <typename T>
 class Heap {
 private:
@@ -49,7 +46,7 @@ public:
 
 /**
  * Fügt dem Heap eine weitere Ebene hinzu.
- * @tparam T
+ * @tparam T (typename)
  */
 template <typename T>
 void Heap<T>::increase_capacity() {
@@ -68,7 +65,7 @@ void Heap<T>::increase_capacity() {
 
 /**
  * Löscht die unterste Ebene des Heaps.
- * @tparam T
+ * @tparam T (typename)
  */
 template <typename T>
 void Heap<T>::decrease_capacity() {
@@ -90,8 +87,8 @@ void Heap<T>::decrease_capacity() {
 /**
  * Durchläuft den Heap rekursiv und reicht bei Änderungsbedarf einen Wert von unten
  * nach oben durch den Heap, solange bis die Min-Heap-Eigenschaft wiederhergestellt ist.
- * @tparam T
- * @param start_index
+ * @tparam T (typename)
+ * @param start_index (int)
  */
 template <typename T>
 void Heap<T>::assert_min_heap_bottom_up(int start_index) {
@@ -120,8 +117,8 @@ void Heap<T>::assert_min_heap_bottom_up(int start_index) {
 /**
  * Durchläuft den Heap rekursiv und reicht bei Änderungsbedarf einen Wert von oben
  * nach unten durch den Heap, solange bis die Min-Heap-Eigenschaft wiederhergestellt ist.
- * @tparam T
- * @param start_index
+ * @tparam T (typename)
+ * @param start_index (int)
  */
 template <typename T>
 void Heap<T>::assert_min_heap_top_down(int start_index) {
@@ -153,9 +150,9 @@ void Heap<T>::assert_min_heap_top_down(int start_index) {
 }
 
 /**
- * Gibt an, ob der Heap leer ist.
- * @tparam T
- * @return
+ * Gibt an, ob der Heap leer ist. true = Heap leer. false = Heap hat mind. 1 Element
+ * @tparam T (typename)
+ * @return is_empty (bool)
  */
 template <typename T>
 bool Heap<T>::is_empty() {
@@ -166,9 +163,9 @@ bool Heap<T>::is_empty() {
 
 /**
  * Gibt den Eltern-Index zurück oder -1, falls es keinen Eltern-Knoten gibt.
- * @tparam T
- * @param child_index
- * @return
+ * @tparam T (typename)
+ * @param child_index (int)
+ * @return index_of_parent (int)
  */
 template <typename T>
 int Heap<T>::index_of_parent(int child_index) {
@@ -180,9 +177,9 @@ int Heap<T>::index_of_parent(int child_index) {
 
 /**
  * Gibt den Index des linken Kind-Knotens zurück.
- * @tparam T
- * @param parent_index
- * @return
+ * @tparam T (typename)
+ * @param parent_index (int)
+ * @return index_of_left_child
  */
 template <typename T>
 int Heap<T>::index_of_left_child(int parent_index) {
@@ -191,9 +188,9 @@ int Heap<T>::index_of_left_child(int parent_index) {
 
 /**
  * Gibt den Index des rechten Kind-Knotens zurück.
- * @tparam T
- * @param parent_index
- * @return
+ * @tparam T (typename)
+ * @param parent_index (int)
+ * @return index_of_right_child
  */
 template <typename T>
 int Heap<T>::index_of_right_child(int parent_index) {
@@ -203,8 +200,8 @@ int Heap<T>::index_of_right_child(int parent_index) {
 // ---------- public Methoden Implementierung ----------
 
 /**
- * Konstruktor des Heaps. Es wird ein leerer Heap mit 3 Ebenen (also 15 Speicherplätzen) erstellt.
- * @tparam T
+ * Standard-Konstruktor des Heaps. Es wird ein leerer Heap mit 3 Ebenen (also 15 Speicherplätzen) erstellt.
+ * @tparam T (typename)
  */
 template <typename T>
 Heap<T>::Heap() {
@@ -216,25 +213,29 @@ Heap<T>::Heap() {
 /**
  * Überladener Konstruktor: Befüllt das Array T* _values
  * mit den Werten im übergebenen Array arr.
- * @tparam T
- * @param arr
+ * @tparam T (typename)
+ * @tparam N (size_t)
+ * @param &arr (T*)
  */
 template <typename T>
 template <size_t N>
 Heap<T>::Heap(T (&arr)[N]) {
     int size_of_arr = N;
-    std::cout << "size_of_arr: " << size_of_arr << std::endl;
-    _size = size_of_arr + 15; // kleinen Puffer von 15 zusätzlichen freien Speicherplätzen
-    _next = size_of_arr;
+    int whaaaat = 0;
+    while (size_of_arr / (int) pow(2, whaaaat) >= 1) {
+        whaaaat++;
+    }
+    _size = (int) pow(2, whaaaat) * 2 - 1; // mind. 1 freie Ebene + evtl. der Rest der belegten
+    _next = 0;
     _values = new T[_size];
     for (int i = 0; i < size_of_arr; i++) {
-        _values[i] = arr[i];
+        insert(arr[i]);
     }
 }
 
 /**
  * Destruktor des Heaps. Der Speicherbereich des Arrays T* _values wird freigegeben.
- * @tparam T
+ * @tparam T (typename)
  */
 template <typename T>
 Heap<T>::~Heap() {
@@ -243,8 +244,8 @@ Heap<T>::~Heap() {
 
 /**
  * Gibt die aktuelle Größe des Heaps zurück.
- * @tparam T
- * @return
+ * @tparam T (typename)
+ * @return _size (int)
  */
 template <typename T>
 int Heap<T>::get_size() {
@@ -253,8 +254,8 @@ int Heap<T>::get_size() {
 
 /**
  * Gibt den aktuellen Wert des Attributs _next zurück.
- * @tparam T
- * @return
+ * @tparam T (typename)
+ * @return _next (int)
  */
 template <typename T>
 int Heap<T>::get_next() {
@@ -265,23 +266,22 @@ int Heap<T>::get_next() {
  * Gibt den Wert an der Stelle index zurück. Falls ein ungültiger Wert
  * für index übergeben wird, wird eine IndexOutOfBoundsExceptionIndexOutOfBoundsException geworfen.
  * @throws IndexOutOfBoundsException
- * @tparam T
- * @param index
- * @return
+ * @tparam T (typename)
+ * @param index (int)
+ * @return _values[index] (T)
  */
 template <typename T>
 T Heap<T>::get_value_at(int index) {
     if (index >= _next || index < 0)
         throw IndexOutOfBoundsException();
-    //TODO: throw abfangen an der passenden Stelle.
     else
         return _values[index];
 }
 
 /**
  * Fügt den Wert val in den Heap ein und sortiert anschließend den Heap neu.
- * @tparam T
- * @param val
+ * @tparam T (typename)
+ * @param val (T)
  */
 template <typename T>
 void Heap<T>::insert(T val) {
@@ -295,10 +295,10 @@ void Heap<T>::insert(T val) {
 
 /**
  * Gibt das kleinste Element des Heaps zurück. Ist kein Element vorhanden,
- * wird eine EmptyHeap Exception geworfen.
+ * wird eine EmptyHeapException geworfen.
  * @throws EmptyHeapException
- * @tparam T
- * @return
+ * @tparam T (typename)
+ * @return _values[0] (T)
  */
 template <typename T>
 T Heap<T>::minimum() {
@@ -313,7 +313,7 @@ T Heap<T>::minimum() {
  * Entfernt das kleinste Element aus dem Heap. Ist der Heap leer,
  * wird eine EmptyHeapException geworfen.
  * @throws EmptyHeapException
- * @tparam T
+ * @tparam T (typename)
  */
 template <typename T>
 void Heap<T>::extract_min() {
@@ -333,8 +333,8 @@ void Heap<T>::extract_min() {
 
 /**
  * Wandelt den Inhalt des Heaps in einen String um und gibt diesen zurück.
- * @tparam T
- * @return
+ * @tparam T (typename)
+ * @return heap_string (string)
  */
 template <typename T>
 std::string Heap<T>::to_string() {
