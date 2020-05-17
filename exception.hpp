@@ -1,9 +1,9 @@
 #ifndef MIN_HEAP_CPP_EXCEPTION_HPP
 #define MIN_HEAP_CPP_EXCEPTION_HPP
-
+#include <exception>
 #include <string>
 
-class EmptyHeapException {
+class EmptyHeapException : public std::exception {
 private:
     std::string _error_code;
 

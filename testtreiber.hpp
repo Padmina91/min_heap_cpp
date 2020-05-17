@@ -17,9 +17,11 @@ private:
     void test4(Heap<T> heap_variable, const std::string& type_name);
     template <typename T>
     void test5(Heap<T> heap_variable, const std::string& type_name);
+    template <typename T>
+    void execute_all_tests(Heap<T> heap_variable, const std::string& type_name);
 
 public:
-// ---------- public Methoden Deklaration ----------
+// ---------- public Methoden Definition ----------
     explicit Testtreiber() = default;
     ~Testtreiber() = default;
     
@@ -32,13 +34,27 @@ public:
 template <typename T>
 void Testtreiber::test1(Heap<T> heap_variable, const std::string& type_name) {
     using namespace std;
-    cout << "Test 1 wird ausgef\x81hrt mit Datentyp " << type_name << endl;
+    bool catch_activated = false;
+    try {
+        heap_variable.extract_min();
+    } catch (EmptyHeapException&) {
+        catch_activated = true;
+    }
+    if (catch_activated) {
+        try {
+            heap_variable.minimum();
+        } catch (EmptyHeapException&) {
+            cout << "Test 1 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+            return;
+        }
+    }
+    cout << "Test 1 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
 }
 
 template <typename T>
 void Testtreiber::test2(Heap<T> heap_variable, const std::string& type_name) {
     using namespace std;
-    cout << "Test 2 wird ausgef\x81hrt mit Datentyp " << type_name << endl;
+    
 }
 
 template <typename T>
@@ -59,50 +75,32 @@ void Testtreiber::test5(Heap<T> heap_variable, const std::string& type_name) {
     cout << "Test 5 wird ausgef\x81hrt mit Datentyp " << type_name << endl;
 }
 
-// ---------- public Methoden Implementierung ----------
+template <typename T>
+void Testtreiber::execute_all_tests(Heap<T> heap_variable, const std::string& type_name) {
+    test1(heap_variable, type_name);
+    test2(heap_variable, type_name);
+    test3(heap_variable, type_name);
+    test4(heap_variable, type_name);
+    test5(heap_variable, type_name);
+    std::cout << std::endl;
+}
+
+// ---------- public static Methoden Implementierung ----------
 
 void Testtreiber::execute_tests() {
-    Heap<int> int_heap;
     Testtreiber testtreiber;
-    testtreiber.test1(int_heap, "int");
-    testtreiber.test2(int_heap, "int");
-    testtreiber.test3(int_heap, "int");
-    testtreiber.test4(int_heap, "int");
-    testtreiber.test5(int_heap, "int");
-    int_heap.~Heap();
     
-    std::cout << std::endl;
+    Heap<int> int_heap;
+    testtreiber.execute_all_tests(int_heap, "int");
     
     Heap<float> float_heap;
-    testtreiber.test1(float_heap, "float");
-    testtreiber.test2(float_heap, "float");
-    testtreiber.test3(float_heap, "float");
-    testtreiber.test4(float_heap, "float");
-    testtreiber.test5(float_heap, "float");
-    testtreiber.~Testtreiber();
-    float_heap.~Heap();
-    
-    std::cout << std::endl;
+    testtreiber.execute_all_tests(float_heap, "float");
     
     Heap<double> double_heap;
-    testtreiber.test1(double_heap, "double");
-    testtreiber.test2(double_heap, "double");
-    testtreiber.test3(double_heap, "double");
-    testtreiber.test4(double_heap, "double");
-    testtreiber.test5(double_heap, "double");
-    testtreiber.~Testtreiber();
-    double_heap.~Heap();
-    
-    std::cout << std::endl;
-    
-    
-    
-    /*heap_variable.test1(heap_variable); Warum wirft das hier keinen Fehler??
-    heap_variable.test2(heap_variable);
-    heap_variable.test3(heap_variable);
-    heap_variable.test4(heap_variable);
-    heap_variable.test5(heap_variable);
-    heap_variable.~Testtreiber();*/
+    testtreiber.execute_all_tests(double_heap, "double");
+
+    Heap<char> char_heap;
+    testtreiber.execute_all_tests(char_heap, "char");
 }
 
 #endif //MIN_HEAP_CPP_TESTTREIBER_HPP
