@@ -127,7 +127,11 @@ void Testtreiber::test4(Heap<T> &heap_variable, const std::string &type_name) {
 template <typename T>
 void Testtreiber::test5(Heap<T> &heap_variable, const std::string &type_name) {
     using namespace std;
-    cout << "Test 5 wird ausgef\x81hrt mit Datentyp " << type_name << endl;
+    T minimum = heap_variable.minimum();
+    if (minimum == heap_variable.get_value_at(0))
+        cout << "Test 5 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+    else
+        cout << "Test 5 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
 }
 
 template <typename T>
