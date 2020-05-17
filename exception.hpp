@@ -8,4 +8,9 @@ public:
     explicit EmptyHeapException() = default;
 };
 
+class IndexOutOfBoundsException : public std::exception {
+public:
+    explicit IndexOutOfBoundsException() = default;
+};
+
 #endif //MIN_HEAP_CPP_EXCEPTION_HPP

@@ -8,19 +8,20 @@ class Testtreiber {
 private:
 // ---------- private Methoden Deklaration ----------
     template <typename T>
-    bool test_min_heap_correctness(Heap<T> &heap_variable, int start_index, int heap_size);
+    bool test_min_heap_correctness(Heap<T>& heap_variable, int start_index, int heap_size);
     template <typename T>
-    void test1(Heap<T> &heap_variable, const std::string &type_name);
+    void test1(Heap<T>& heap_variable, const std::string &type_name);
     template <typename T>
-    void test2(Heap<T> &heap_variable, const std::string &type_name);
+    void test2(Heap<T>& heap_variable, const std::string &type_name);
     template <typename T>
-    void test3(Heap<T> &heap_variable, const std::string &type_name);
+    void test3(Heap<T>& heap_variable, const std::string &type_name);
     template <typename T>
-    void test4(Heap<T> &heap_variable, const std::string &type_name);
+    void test4(Heap<T>& heap_variable, const std::string &type_name);
     template <typename T>
-    void test5(Heap<T> &heap_variable, const std::string &type_name);
+    void test5(Heap<T>& heap_variable, const std::string &type_name);
+    void test6(const std::string &type_name);
     template <typename T>
-    void execute_all_tests(Heap<T> &heap_variable, const std::string &type_name);
+    void execute_all_tests(Heap<T>& heap_variable, const std::string &type_name);
 
 public:
 // ---------- public Methoden Definition ----------
@@ -34,7 +35,7 @@ public:
 // ---------- private Methoden Implementierung ----------
 
 template <typename T>
-bool Testtreiber::test_min_heap_correctness(Heap<T> &heap_variable, int start_index, int heap_size) {
+bool Testtreiber::test_min_heap_correctness(Heap<T>& heap_variable, int start_index, int heap_size) {
     bool heap_correct = true;
     int left_child_index = Heap<T>::index_of_left_child(start_index);
     bool left_child_exists = heap_size > left_child_index;
@@ -58,7 +59,7 @@ bool Testtreiber::test_min_heap_correctness(Heap<T> &heap_variable, int start_in
 }
 
 template <typename T>
-void Testtreiber::test1(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::test1(Heap<T>& heap_variable, const std::string &type_name) {
     using namespace std;
     bool catch_activated = false;
     try {
@@ -78,7 +79,7 @@ void Testtreiber::test1(Heap<T> &heap_variable, const std::string &type_name) {
 }
 
 template <typename T>
-void Testtreiber::test2(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::test2(Heap<T>& heap_variable, const std::string &type_name) {
     using namespace std;
     if ("int" == type_name) {
         for (int i = 100; i >= 0; i--)
@@ -102,7 +103,7 @@ void Testtreiber::test2(Heap<T> &heap_variable, const std::string &type_name) {
 }
 
 template <typename T>
-void Testtreiber::test3(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::test3(Heap<T>& heap_variable, const std::string &type_name) {
     using namespace std;
     int old_size = heap_variable.get_size();
     int decrease_at = old_size / 4 - 1;
@@ -116,7 +117,7 @@ void Testtreiber::test3(Heap<T> &heap_variable, const std::string &type_name) {
 }
 
 template <typename T>
-void Testtreiber::test4(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::test4(Heap<T>& heap_variable, const std::string &type_name) {
     using namespace std;
     if (test_min_heap_correctness(heap_variable, 0, heap_variable.get_next()))
         cout << "Test 4 erfolgreich. (Datentyp: " << type_name << ")" << endl;
@@ -125,7 +126,7 @@ void Testtreiber::test4(Heap<T> &heap_variable, const std::string &type_name) {
 }
 
 template <typename T>
-void Testtreiber::test5(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::test5(Heap<T>& heap_variable, const std::string &type_name) {
     using namespace std;
     T minimum = heap_variable.minimum();
     if (minimum == heap_variable.get_value_at(0))
@@ -134,13 +135,70 @@ void Testtreiber::test5(Heap<T> &heap_variable, const std::string &type_name) {
         cout << "Test 5 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
 }
 
+void Testtreiber::test6(const std::string &type_name) {
+    using namespace std;
+    if ("int" == type_name) {
+        int arr[51];
+        for (int i = 0; i <= 50; i++) {
+            arr[i] = 100 - i;
+        }
+        Heap<int> heap2(arr);
+        //delete[] arr;
+        cout << "Heap als String: " << heap2.to_string() << endl;
+        if (test_min_heap_correctness(heap2, 0, heap2.get_next()))
+            cout << "Test 6 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+        else
+            cout << "Test 6 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
+    }
+    /*if ("float" == type_name) {
+        auto* arr = new float[51];
+        for (int i = 0; i <= 50; i++) {
+            arr[i] = 150.53f - (float) i;
+        }
+        Heap<float> heap2(arr);
+        delete[] arr;
+        cout << "Heap als String: " << heap2.to_string() << endl;
+        if (test_min_heap_correctness(heap2, 0, heap2.get_next()))
+            cout << "Test 6 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+        else
+            cout << "Test 6 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
+    }
+    if ("double" == type_name) {
+        auto* arr = new double[51];
+        for (int i = 0; i <= 50; i++) {
+            arr[i] = 200.87 - (double) i;
+        }
+        Heap<double> heap2(arr);
+        delete[] arr;
+        cout << "Heap als String: " << heap2.to_string() << endl;
+        if (test_min_heap_correctness(heap2, 0, heap2.get_next()))
+            cout << "Test 6 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+        else
+            cout << "Test 6 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
+    }
+    if ("char" == type_name) {
+        auto* arr = new char[51];
+        for (int i = 0; i <= 50; i++) {
+            arr[i] = (char) (150 - i);
+        }
+        Heap<char> heap2(arr);
+        delete[] arr;
+        cout << "Heap als String: " << heap2.to_string() << endl;
+        if (test_min_heap_correctness(heap2, 0, heap2.get_next()))
+            cout << "Test 6 erfolgreich. (Datentyp: " << type_name << ")" << endl;
+        else
+            cout << "Test 6 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
+    }*/
+}
+
 template <typename T>
-void Testtreiber::execute_all_tests(Heap<T> &heap_variable, const std::string &type_name) {
+void Testtreiber::execute_all_tests(Heap<T>& heap_variable, const std::string &type_name) {
     test1(heap_variable, type_name);
     test2(heap_variable, type_name);
     test3(heap_variable, type_name);
     test4(heap_variable, type_name);
     test5(heap_variable, type_name);
+    test6(type_name);
     std::cout << std::endl;
 }
 

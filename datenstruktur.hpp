@@ -7,6 +7,9 @@
 #include <string>
 #include <sstream>
 
+//TODO: Konstruktor überladen.
+//TODO: Doku ergänzen und optimieren.
+
 template <typename T>
 class Heap {
 private:
@@ -21,15 +24,17 @@ private:
     void assert_min_heap_bottom_up(int start_index);
     void assert_min_heap_top_down(int start_index);
     bool is_empty();
-    
+
 public:
 // ----------- public static Methoden Deklaration ----------
     static int index_of_parent(int child_index);
     static int index_of_left_child(int parent_index);
     static int index_of_right_child(int parent_index);
-    
+
 // ---------- public Methoden Deklaration ----------
     explicit Heap();
+    template <size_t N>
+    explicit Heap(T (&arr)[N]);
     ~Heap();
     int get_size();
     int get_next();
@@ -43,7 +48,7 @@ public:
 // ---------- private Methoden Implementierung ----------
 
 /**
- * Blääääh
+ * Fügt dem Heap eine weitere Ebene hinzu.
  * @tparam T
  */
 template <typename T>
@@ -61,6 +66,10 @@ void Heap<T>::increase_capacity() {
     _values = temp;
 }
 
+/**
+ * Löscht die unterste Ebene des Heaps.
+ * @tparam T
+ */
 template <typename T>
 void Heap<T>::decrease_capacity() {
     int i = 0;
@@ -79,7 +88,8 @@ void Heap<T>::decrease_capacity() {
 }
 
 /**
- * Testtext
+ * Durchläuft den Heap rekursiv und reicht bei Änderungsbedarf einen Wert von unten
+ * nach oben durch den Heap, solange bis die Min-Heap-Eigenschaft wiederhergestellt ist.
  * @tparam T
  * @param start_index
  */
@@ -107,6 +117,12 @@ void Heap<T>::assert_min_heap_bottom_up(int start_index) {
     }
 }
 
+/**
+ * Durchläuft den Heap rekursiv und reicht bei Änderungsbedarf einen Wert von oben
+ * nach unten durch den Heap, solange bis die Min-Heap-Eigenschaft wiederhergestellt ist.
+ * @tparam T
+ * @param start_index
+ */
 template <typename T>
 void Heap<T>::assert_min_heap_top_down(int start_index) {
     int left_child_index = index_of_left_child(start_index);
@@ -136,6 +152,11 @@ void Heap<T>::assert_min_heap_top_down(int start_index) {
     }
 }
 
+/**
+ * Gibt an, ob der Heap leer ist.
+ * @tparam T
+ * @return
+ */
 template <typename T>
 bool Heap<T>::is_empty() {
     return _next <= 0;
@@ -143,6 +164,12 @@ bool Heap<T>::is_empty() {
 
 // ----------- private static Methoden Implementierung ----------
 
+/**
+ * Gibt den Eltern-Index zurück oder -1, falls es keinen Eltern-Knoten gibt.
+ * @tparam T
+ * @param child_index
+ * @return
+ */
 template <typename T>
 int Heap<T>::index_of_parent(int child_index) {
     if (child_index != 0) {
@@ -151,11 +178,23 @@ int Heap<T>::index_of_parent(int child_index) {
     return -1;
 }
 
+/**
+ * Gibt den Index des linken Kind-Knotens zurück.
+ * @tparam T
+ * @param parent_index
+ * @return
+ */
 template <typename T>
 int Heap<T>::index_of_left_child(int parent_index) {
     return parent_index * 2 + 1;
 }
 
+/**
+ * Gibt den Index des rechten Kind-Knotens zurück.
+ * @tparam T
+ * @param parent_index
+ * @return
+ */
 template <typename T>
 int Heap<T>::index_of_right_child(int parent_index) {
     return parent_index * 2 + 2;
@@ -163,6 +202,10 @@ int Heap<T>::index_of_right_child(int parent_index) {
 
 // ---------- public Methoden Implementierung ----------
 
+/**
+ * Konstruktor des Heaps. Es wird ein leerer Heap mit 3 Ebenen (also 15 Speicherplätzen) erstellt.
+ * @tparam T
+ */
 template <typename T>
 Heap<T>::Heap() {
     _size = 15;
@@ -170,26 +213,76 @@ Heap<T>::Heap() {
     _values = new T[_size];
 }
 
+/**
+ * Überladener Konstruktor: Befüllt das Array T* _values
+ * mit den Werten im übergebenen Array arr.
+ * @tparam T
+ * @param arr
+ */
+template <typename T>
+template <size_t N>
+Heap<T>::Heap(T (&arr)[N]) {
+    int size_of_arr = N;
+    std::cout << "size_of_arr: " << size_of_arr << std::endl;
+    _size = size_of_arr + 15; // kleinen Puffer von 15 zusätzlichen freien Speicherplätzen
+    _next = size_of_arr;
+    _values = new T[_size];
+    for (int i = 0; i < size_of_arr; i++) {
+        _values[i] = arr[i];
+    }
+}
+
+/**
+ * Destruktor des Heaps. Der Speicherbereich des Arrays T* _values wird freigegeben.
+ * @tparam T
+ */
 template <typename T>
 Heap<T>::~Heap() {
     delete[] _values;
 }
 
+/**
+ * Gibt die aktuelle Größe des Heaps zurück.
+ * @tparam T
+ * @return
+ */
 template <typename T>
 int Heap<T>::get_size() {
     return _size;
 }
 
+/**
+ * Gibt den aktuellen Wert des Attributs _next zurück.
+ * @tparam T
+ * @return
+ */
 template <typename T>
 int Heap<T>::get_next() {
     return _next;
 }
 
+/**
+ * Gibt den Wert an der Stelle index zurück. Falls ein ungültiger Wert
+ * für index übergeben wird, wird eine IndexOutOfBoundsExceptionIndexOutOfBoundsException geworfen.
+ * @throws IndexOutOfBoundsException
+ * @tparam T
+ * @param index
+ * @return
+ */
 template <typename T>
 T Heap<T>::get_value_at(int index) {
-    return _values[index];
+    if (index >= _next || index < 0)
+        throw IndexOutOfBoundsException();
+    //TODO: throw abfangen an der passenden Stelle.
+    else
+        return _values[index];
 }
 
+/**
+ * Fügt den Wert val in den Heap ein und sortiert anschließend den Heap neu.
+ * @tparam T
+ * @param val
+ */
 template <typename T>
 void Heap<T>::insert(T val) {
     if (_size == _next) {
@@ -200,6 +293,13 @@ void Heap<T>::insert(T val) {
     assert_min_heap_bottom_up(0);
 }
 
+/**
+ * Gibt das kleinste Element des Heaps zurück. Ist kein Element vorhanden,
+ * wird eine EmptyHeap Exception geworfen.
+ * @throws EmptyHeapException
+ * @tparam T
+ * @return
+ */
 template <typename T>
 T Heap<T>::minimum() {
     if (is_empty()) {
@@ -209,6 +309,12 @@ T Heap<T>::minimum() {
     }
 }
 
+/**
+ * Entfernt das kleinste Element aus dem Heap. Ist der Heap leer,
+ * wird eine EmptyHeapException geworfen.
+ * @throws EmptyHeapException
+ * @tparam T
+ */
 template <typename T>
 void Heap<T>::extract_min() {
     if (!is_empty()) {
@@ -225,6 +331,11 @@ void Heap<T>::extract_min() {
     }
 }
 
+/**
+ * Wandelt den Inhalt des Heaps in einen String um und gibt diesen zurück.
+ * @tparam T
+ * @return
+ */
 template <typename T>
 std::string Heap<T>::to_string() {
     using namespace std;
