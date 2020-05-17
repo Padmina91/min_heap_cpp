@@ -15,7 +15,7 @@ private:
     int _next;
     T *_values;
 
-// ---------- private Methoden ----------
+// ---------- private Methoden Deklaration ----------
     void increase_capacity();
     
     void decrease_capacity();
@@ -26,7 +26,7 @@ private:
     
     bool is_empty();
 
-// ----------- private static Methoden ----------
+// ----------- private static Methoden Deklaration ----------
     static int index_of_parent(int child_index);
     
     static int index_of_left_child(int parent_index);
@@ -34,7 +34,7 @@ private:
     static int index_of_right_child(int parent_index);
 
 public:
-// ---------- public Methoden ----------
+// ---------- public Methoden Deklaration ----------
     explicit Heap();
     
     ~Heap();
@@ -48,7 +48,7 @@ public:
     std::string to_string();
 };
 
-// ---------- private Methoden ----------
+// ---------- private Methoden Implementierung ----------
 
 template <typename T>
 void Heap<T>::increase_capacity() {
@@ -140,13 +140,13 @@ bool Heap<T>::is_empty() {
     return _next <= 0;
 }
 
-// ---------- private static Methoden ----------
+// ----------- private static Methoden Implementierung ----------
 
 template <typename T>
 int Heap<T>::index_of_parent(int child_index) {
     if (child_index != 0) {
         return (child_index - 1) / 2;
-    } // wie ist hier das Ideal? "else" oder nicht?
+    }
     return -1;
 }
 
@@ -160,7 +160,7 @@ int Heap<T>::index_of_right_child(int parent_index) {
     return parent_index * 2 + 2;
 }
 
-// ---------- public Methoden ----------
+// ---------- public Methoden Implementierung ----------
 
 template <typename T>
 Heap<T>::Heap() {
