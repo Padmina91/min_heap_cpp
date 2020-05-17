@@ -1,9 +1,7 @@
-#include <iostream>
-#include "datenstruktur.hpp"
+#include "testtreiber.hpp"
 
 int main() {
-    using namespace std;
     
-    Heap<int> heap_variable;
+    Testtreiber::execute_tests();
 
 }
