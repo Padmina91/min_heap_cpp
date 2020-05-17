@@ -7,6 +7,8 @@
 #include <string>
 #include <sstream>
 
+//TODO: Setter für (_next?) setzen
+
 template <typename T>
 class Heap {
 private:
@@ -17,34 +19,26 @@ private:
 
 // ---------- private Methoden Deklaration ----------
     void increase_capacity();
-    
     void decrease_capacity();
-    
     void assert_min_heap_bottom_up(int start_index);
-    
     void assert_min_heap_top_down(int start_index);
-    
     bool is_empty();
-
-// ----------- private static Methoden Deklaration ----------
-    static int index_of_parent(int child_index);
     
-    static int index_of_left_child(int parent_index);
-    
-    static int index_of_right_child(int parent_index);
-
 public:
+// ----------- public static Methoden Deklaration ----------
+    static int index_of_parent(int child_index);
+    static int index_of_left_child(int parent_index);
+    static int index_of_right_child(int parent_index);
+    
 // ---------- public Methoden Deklaration ----------
     explicit Heap();
-    
     ~Heap();
-    
-    void insert(int val);
-    
+    int get_size();
+    int get_next();
+    T get_value_at(int index);
+    void insert(T val);
     T minimum();
-    
     void extract_min();
-    
     std::string to_string();
 };
 
@@ -100,7 +94,7 @@ void Heap<T>::assert_min_heap_bottom_up(int start_index) {
         assert_min_heap_bottom_up(right_child_index);
     }
     if (parent_exists && _values[start_index] < _values[parent_index]) {
-        int temp = _values[start_index];
+        T temp = _values[start_index];
         _values[start_index] = _values[parent_index];
         _values[parent_index] = temp;
     }
@@ -164,7 +158,7 @@ int Heap<T>::index_of_right_child(int parent_index) {
 
 template <typename T>
 Heap<T>::Heap() {
-    _size = 1;
+    _size = 15;
     _next = 0;
     _values = new T[_size];
 }
@@ -175,7 +169,22 @@ Heap<T>::~Heap() {
 }
 
 template <typename T>
-void Heap<T>::insert(int val) {
+int Heap<T>::get_size() {
+    return _size;
+}
+
+template <typename T>
+int Heap<T>::get_next() {
+    return _next;
+}
+
+template <typename T>
+T Heap<T>::get_value_at(int index) {
+    return _values[index];
+}
+
+template <typename T>
+void Heap<T>::insert(T val) {
     if (_size == _next) {
         increase_capacity();
     }
@@ -201,7 +210,7 @@ void Heap<T>::extract_min() {
         if (!is_empty()) {
             assert_min_heap_top_down(0);
         }
-        if ((_next + 1) * 2 == _size + 1) {
+        if ((_next + 1) * 4 == _size + 1) {
             decrease_capacity();
         }
     } else {
