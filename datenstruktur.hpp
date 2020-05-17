@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-template<typename T>
+template <typename T>
 class Heap {
 private:
 // ---------- private Attribute ----------
@@ -17,23 +17,34 @@ private:
 
 // ---------- private Methoden ----------
     void increase_capacity();
+    
     void decrease_capacity();
+    
     void assert_min_heap_bottom_up(int start_index);
+    
     void assert_min_heap_top_down(int start_index);
+    
     bool is_empty();
 
 // ----------- private static Methoden ----------
     static int index_of_parent(int child_index);
+    
     static int index_of_left_child(int parent_index);
+    
     static int index_of_right_child(int parent_index);
 
 public:
 // ---------- public Methoden ----------
     explicit Heap(int size);
+    
     ~Heap();
+    
     void insert(int val);
+    
     T minimum();
+    
     void extract_min();
+    
     std::string to_string();
 };
 
@@ -43,7 +54,7 @@ template <typename T>
 void Heap<T>::increase_capacity() {
     int i = 0;
     int old_size = _size;
-    while ( (int) pow(2, i) <= _size) {
+    while ((int) pow(2, i) <= _size) {
         i++;
     }
     _size = (int) pow(2, i) * 2 - 1;
@@ -59,10 +70,10 @@ void Heap<T>::decrease_capacity() {
     int i = 0;
     while (pow(2, i) < _size)
         i++;
-
+    
     if (i > 0) {
-        _size = (int) pow(2, i-2) * 2 - 1;
-
+        _size = (int) pow(2, i - 2) * 2 - 1;
+        
         T *temp = new T[_size];
         for (int j = 0; j < _size; j++)
             temp[j] = _values[j];
@@ -185,12 +196,12 @@ T Heap<T>::minimum() {
 template <typename T>
 void Heap<T>::extract_min() {
     if (!is_empty()) {
-        _values[0] = _values[_next-1];
+        _values[0] = _values[_next - 1];
         _next--;
         if (!is_empty()) {
             assert_min_heap_top_down(0);
         }
-        if ((_next+1) *2 == _size +1) {
+        if ((_next + 1) * 2 == _size + 1) {
             decrease_capacity();
         }
     } else {
@@ -201,7 +212,7 @@ void Heap<T>::extract_min() {
 template <typename T>
 std::string Heap<T>::to_string() {
     using namespace std;
-    ostringstream heap_string (std::ostringstream::ate);
+    ostringstream heap_string(std::ostringstream::ate);
     if (!is_empty()) {
         heap_string << _values[0];
         if (_next > 1) {
@@ -213,8 +224,5 @@ std::string Heap<T>::to_string() {
     }
     return heap_string.str();
 }
-
-// was ist .gitignore???
-// using statt typedef!
 
 #endif //MIN_HEAP_CPP_DATENSTRUKTUR_HPP
