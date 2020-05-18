@@ -17,28 +17,43 @@ private:
 
 // ---------- private Methoden Deklaration ----------
     void increase_capacity();
+    
     void decrease_capacity();
+    
     void assert_min_heap_bottom_up(int start_index);
+    
     void assert_min_heap_top_down(int start_index);
+    
     bool is_empty();
 
 public:
 // ----------- public static Methoden Deklaration ----------
     static int index_of_parent(int child_index);
+    
     static int index_of_left_child(int parent_index);
+    
     static int index_of_right_child(int parent_index);
 
 // ---------- public Methoden Deklaration ----------
     explicit Heap();
+    
     template <size_t N>
-    explicit Heap(T (&arr)[N]);
+    explicit Heap(T (& arr)[N]);
+    
     ~Heap();
+    
     int get_size();
+    
     int get_next();
+    
     T get_value_at(int index);
+    
     void insert(T val);
+    
     T minimum();
+    
     void extract_min();
+    
     std::string to_string();
 };
 
@@ -219,13 +234,13 @@ Heap<T>::Heap() {
  */
 template <typename T>
 template <size_t N>
-Heap<T>::Heap(T (&arr)[N]) {
+Heap<T>::Heap(T (& arr)[N]) {
     int size_of_arr = N;
-    int whaaaat = 0;
-    while (size_of_arr / (int) pow(2, whaaaat) >= 1) {
-        whaaaat++;
+    int exponent = 0;
+    while (size_of_arr / (int) pow(2, exponent) >= 1) {
+        exponent++;
     }
-    _size = (int) pow(2, whaaaat) * 2 - 1; // mind. 1 freie Ebene + evtl. der Rest der belegten
+    _size = (int) pow(2, exponent) * 2 - 1; // mind. 1 komplett freie Ebene
     _next = 0;
     _values = new T[_size];
     for (int i = 0; i < size_of_arr; i++) {
@@ -240,6 +255,7 @@ Heap<T>::Heap(T (&arr)[N]) {
 template <typename T>
 Heap<T>::~Heap() {
     delete[] _values;
+    _values = nullptr;
 }
 
 /**
@@ -264,7 +280,7 @@ int Heap<T>::get_next() {
 
 /**
  * Gibt den Wert an der Stelle index zurück. Falls ein ungültiger Wert
- * für index übergeben wird, wird eine IndexOutOfBoundsExceptionIndexOutOfBoundsException geworfen.
+ * für index übergeben wird, wird eine IndexOutOfBoundsException geworfen.
  * @throws IndexOutOfBoundsException
  * @tparam T (typename)
  * @param index (int)
