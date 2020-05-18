@@ -3,14 +3,8 @@
 #include <exception>
 #include <string>
 
-class EmptyHeapException : public std::exception {
-public:
-    explicit EmptyHeapException() = default;
-};
+class EmptyHeapException : public std::exception {};
 
-class IndexOutOfBoundsException : public std::exception {
-public:
-    explicit IndexOutOfBoundsException() = default;
-};
+class IndexOutOfBoundsException : public std::exception {};
 
 #endif //MIN_HEAP_CPP_EXCEPTION_HPP
