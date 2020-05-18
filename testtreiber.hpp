@@ -121,7 +121,7 @@ void Testtreiber::test2(Heap<T>& heap_variable, const std::string& type_name) {
             heap_variable.insert(i);
     }
     if ("float" == type_name || "double" == type_name) {
-        float val = 100.0;
+        float val = 500.4;
         for (int i = 0; i <= 200; i++, val -= 0.5)
             heap_variable.insert(val);
     }

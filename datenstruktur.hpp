@@ -70,16 +70,19 @@ public:
 template <typename T>
 void Heap<T>::increase_capacity() {
     int i = 0;
-    int old_size = _size;
     while ((int) pow(2, i) <= _size) {
         i++;
     }
     _size = (int) pow(2, i) * 2 - 1;
     T *temp = new T[_size];
-    for (int j = 0; j < old_size; j++)
+    for (int j = 0; j < _next; j++)
         temp[j] = _values[j];
     delete[] _values;
-    _values = temp;
+    
+    _values = new T[_size];
+    for (int k = 0; k < _next; k++)
+        _values[k] = temp[k];
+    delete[] temp;
 }
 
 /**
@@ -96,10 +99,14 @@ void Heap<T>::decrease_capacity() {
         _size = (int) pow(2, i - 2) * 2 - 1;
         
         T *temp = new T[_size];
-        for (int j = 0; j < _size; j++)
+        for (int j = 0; j < _next; j++)
             temp[j] = _values[j];
         delete[] _values;
-        _values = temp;
+    
+        _values = new T[_size];
+        for (int k = 0; k < _next; k++)
+            _values[k] = temp[k];
+        delete[] temp;
     }
 }
 
@@ -148,21 +155,21 @@ void Heap<T>::assert_min_heap_top_down(int start_index) {
     if (left_child_exists && right_child_exists) {
         if (_values[left_child_index] < _values[right_child_index]) {
             if (_values[left_child_index] < _values[start_index]) {
-                int temp = _values[start_index];
+                T temp = _values[start_index];
                 _values[start_index] = _values[left_child_index];
                 _values[left_child_index] = temp;
                 assert_min_heap_top_down(left_child_index);
             }
         } else {
             if (_values[right_child_index] < _values[start_index]) {
-                int temp = _values[start_index];
+                T temp = _values[start_index];
                 _values[start_index] = _values[right_child_index];
                 _values[right_child_index] = temp;
                 assert_min_heap_top_down(right_child_index);
             }
         }
     } else if (left_child_exists && _values[left_child_index] < _values[start_index]) {
-        int temp = _values[start_index];
+        T temp = _values[start_index];
         _values[start_index] = _values[left_child_index];
         _values[left_child_index] = temp;
     }
