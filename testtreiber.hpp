@@ -13,23 +13,31 @@ private:
 // ---------- private Methoden Deklaration ----------
     template <typename T>
     bool test_min_heap_correctness(Heap<T>& heap_variable, int start_index, int heap_size);
+    
     template <typename T>
     void test1(Heap<T>& heap_variable, const std::string& type_name);
+    
     template <typename T>
     void test2(Heap<T>& heap_variable, const std::string& type_name);
+    
     template <typename T>
     void test3(Heap<T>& heap_variable, const std::string& type_name);
+    
     template <typename T>
     void test4(Heap<T>& heap_variable, const std::string& type_name);
+    
     template <typename T>
     void test5(Heap<T>& heap_variable, const std::string& type_name);
+    
     void test6(const std::string& type_name);
+    
     template <typename T>
     void execute_all_tests(Heap<T>& heap_variable, const std::string& type_name);
 
 public:
 // ---------- public Methoden Definition ----------
     explicit Testtreiber() = default;
+    
     ~Testtreiber() = default;
 
 // ---------- public static Methoden Deklaration ----------
@@ -66,7 +74,8 @@ bool Testtreiber::test_min_heap_correctness(Heap<T>& heap_variable, int start_in
             heap_variable.get_value_at(start_index) < heap_variable.get_value_at(parent_index)) {
             heap_correct = false;
         }
-    } catch (IndexOutOfBoundsException&) {}
+    } catch (IndexOutOfBoundsException&) {
+    }
     return heap_correct;
 }
 
@@ -179,7 +188,8 @@ void Testtreiber::test5(Heap<T>& heap_variable, const std::string& type_name) {
             cout << "Test 5 erfolgreich. (Datentyp: " << type_name << ")" << endl;
         else
             cout << "Test 5 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
-    } catch (IndexOutOfBoundsException&) {}
+    } catch (IndexOutOfBoundsException&) {
+    }
 }
 
 /**
