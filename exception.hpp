@@ -6,7 +6,6 @@
 #define MIN_HEAP_CPP_EXCEPTION_HPP
 
 #include <exception>
-#include <string>
 
 class EmptyHeapException : public std::exception {};
 

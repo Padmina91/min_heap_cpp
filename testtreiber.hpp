@@ -6,7 +6,6 @@
 #define MIN_HEAP_CPP_TESTTREIBER_HPP
 
 #include "datenstruktur.hpp"
-#include <iomanip>
 
 class Testtreiber {
 private:
