@@ -73,8 +73,7 @@ bool Testtreiber::test_min_heap_correctness(Heap<T>& heap_variable, int start_in
             heap_variable.get_value_at(start_index) < heap_variable.get_value_at(parent_index)) {
             heap_correct = false;
         }
-    } catch (IndexOutOfBoundsException&) {
-    }
+    } catch (IndexOutOfBoundsException&) {}
     return heap_correct;
 }
 
@@ -187,8 +186,7 @@ void Testtreiber::test5(Heap<T>& heap_variable, const std::string& type_name) {
             cout << "Test 5 erfolgreich. (Datentyp: " << type_name << ")" << endl;
         else
             cout << "Test 5 fehlgeschlagen. (Datentyp: " << type_name << ")" << endl;
-    } catch (IndexOutOfBoundsException&) {
-    }
+    } catch (IndexOutOfBoundsException&) {}
 }
 
 /**
