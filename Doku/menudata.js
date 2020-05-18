@@ -40,16 +40,7 @@ var menudata={children:[
 {text:"m",url:"functions.html#index_m"},
 {text:"t",url:"functions.html#index_t"},
 {text:"~",url:"functions.html#index__7E"}]},
-{text:"Functions",url:"functions_func.html",children:[
-{text:"a",url:"functions_func.html#index_a"},
-{text:"d",url:"functions_func.html#index_d"},
-{text:"e",url:"functions_func.html#index_e"},
-{text:"g",url:"functions_func.html#index_g"},
-{text:"h",url:"functions_func.html#index_h"},
-{text:"i",url:"functions_func.html#index_i"},
-{text:"m",url:"functions_func.html#index_m"},
-{text:"t",url:"functions_func.html#index_t"},
-{text:"~",url:"functions_func.html#index__7E"}]},
+{text:"Functions",url:"functions_func.html"},
 {text:"Variables",url:"functions_vars.html"}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"},
